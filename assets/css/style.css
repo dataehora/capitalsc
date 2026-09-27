@@ -348,7 +348,7 @@ section {
   text-align: center;
   padding-bottom: 30px;
 }
-.section-title h2 {
+.section-title h1, .section-title h2 {
   font-size: 32px;
   font-weight: bold;
   text-transform: uppercase;
