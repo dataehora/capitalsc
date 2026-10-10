@@ -23,111 +23,88 @@
     <meta property="og:image:alt" content="Baía Sul de Florianópolis (SC)">
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta name="theme-color" content="#2f4d5a">
     <link rel="stylesheet" href="style.css">
-    <style>
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    </style>
 </head>
-<body class="bg-dark">
-    <div class="container">
-        <div class="row">
-            <div class="col-6 mx-auto">
-                <div class="card card-body text-center mt-5">
-                    <img src="images/logo.png" alt="Capital" style="width: 50%; height: 50%" class="center">
-                    <br>
-                    <h1 class="heading display-5 pb-3">Simulação</h1>
-                    <br>
-                    <form id="loan-form">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Valor do Empréstimo</span>
-                                </div>
-                                <select class="form-control" id="amount">
-                                        <option value="3000">R$ 3.000,00</option>
-                                        <option value="5000">R$ 5.000,00</option>
-                                        <option value="8000">R$ 8.000,00</option>
-                                        <option value="10000">R$ 10.000,00</option>
-                                        <option value="12000">R$ 12.000,00</option>
-                                        <option value="15000">R$ 15.000,00</option>
-                                        <option value="20000">R$ 20.000,00</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Juros</span>
-                                </div>
-                                <select class="form-control" id="interest">
-                                        <option value="5">5%</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Prazo</span>
-                                </div>
-                                <select class="form-control" id="years">
-                                        <option value="6">6 meses</option>
-                                        <option value="12">12 meses</option>
-                                        <option value="18">18 meses</option>
-                                        <option value="24">24 meses</option>
-                                        <option value="30">30 meses</option>
-                                        <option value="36">36 meses</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="submit" value="Calcular" class="btn btn-dark btn-block">
-                        </div>
-                    </form>
+<body>
+    <main class="sim">
+        <div class="sim-card">
+            <a href="/esc/" class="sim-logo" aria-label="Capital SC Empresa Simples de Crédito">
+                <img src="images/logo.png" alt="Capital SC" width="1475" height="326">
+            </a>
 
-                    <!-- Loading Animation -->
-                    <div id="loading">
-                        <img src="images/loading.gif" alt="Loading Animation">
+            <h1 class="sim-title">Simulação de Empréstimo</h1>
+            <p class="sim-subtitle">Escolha o valor e o prazo para ver uma estimativa das parcelas.</p>
+
+            <form id="loan-form" class="sim-form" novalidate>
+                <div class="sim-field">
+                    <label for="amount">Valor do empréstimo</label>
+                    <select id="amount" name="amount">
+                        <option value="3000">R$ 3.000,00</option>
+                        <option value="5000">R$ 5.000,00</option>
+                        <option value="8000">R$ 8.000,00</option>
+                        <option value="10000" selected>R$ 10.000,00</option>
+                        <option value="12000">R$ 12.000,00</option>
+                        <option value="15000">R$ 15.000,00</option>
+                        <option value="20000">R$ 20.000,00</option>
+                    </select>
+                </div>
+
+                <div class="sim-row">
+                    <div class="sim-field">
+                        <label for="interest">Juros</label>
+                        <select id="interest" name="interest">
+                            <option value="5">5% ao mês</option>
+                        </select>
                     </div>
 
-                    <!-- Results -->
-                    <div id="results" class="pt-4">
-                        <h2>Resultado</h2>
-                        <br>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Pagamento mensal</span>
-                                </div>
-                                <input type="text" class="form-control" id="monthly-payment" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Valor total pago ao final do empréstimo</span>
-                                </div>
-                                <input type="text" class="form-control" id="total-payment" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Total de juros ao final do empréstimo</span>
-                                </div>
-                                <input type="text" class="form-control" id="total-interest" disabled>
-                            </div>
-                        </div>
+                    <div class="sim-field">
+                        <label for="years">Prazo</label>
+                        <select id="years" name="years">
+                            <option value="6">6 meses</option>
+                            <option value="12" selected>12 meses</option>
+                            <option value="18">18 meses</option>
+                            <option value="24">24 meses</option>
+                            <option value="30">30 meses</option>
+                            <option value="36">36 meses</option>
+                        </select>
                     </div>
                 </div>
+
+                <button type="submit" class="sim-button">Calcular</button>
+            </form>
+
+            <div id="error" class="sim-error" role="alert" hidden></div>
+
+            <!-- Loading Animation -->
+            <div id="loading" class="sim-loading" hidden>
+                <span class="sim-spinner" aria-hidden="true"></span>
+                <span>Calculando…</span>
             </div>
+
+            <!-- Results -->
+            <section id="results" class="sim-results" aria-live="polite" hidden>
+                <h2>Resultado</h2>
+                <dl class="sim-summary">
+                    <div class="sim-item sim-item--main">
+                        <dt>Pagamento mensal</dt>
+                        <dd id="monthly-payment"></dd>
+                    </div>
+                    <div class="sim-item">
+                        <dt>Valor total pago ao final do empréstimo</dt>
+                        <dd id="total-payment"></dd>
+                    </div>
+                    <div class="sim-item">
+                        <dt>Total de juros ao final do empréstimo</dt>
+                        <dd id="total-interest"></dd>
+                    </div>
+                </dl>
+                <p class="sim-note">Simulação ilustrativa pela Tabela Price (parcelas fixas). Valores, taxas e prazos finais estão sujeitos à análise de crédito.</p>
+            </section>
+
+            <a href="/esc/" class="sim-back">&larr; Voltar ao site</a>
         </div>
-    </div>
+    </main>
 
     <script src="index.js" defer></script>
 </body>
