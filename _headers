@@ -5,7 +5,6 @@
 # console but nothing is blocked. Sources allowed:
 #   self-hosted assets; Google Analytics 4 (G-5T2LX08R87, G-YJCPYG0MMD);
 #   Google Fonts; cdnjs (Font Awesome CSS on /fomento/ and /esc/);
-#   stackpath (Bootstrap 4.3.1 CSS on /simulacao/);
 #   Google Maps embed on /fomento/ and /esc/.
 # 'unsafe-inline' is required for script-src: the gtag snippets and the
 # "anos-dinamicos" counter are inline.
@@ -15,7 +14,7 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(self)
-  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google.com https://*.google.com.br https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.google.com.br; frame-src https://www.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google.com https://*.google.com.br https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.google.com.br; frame-src https://www.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 
 https://:project.pages.dev/*
   X-Robots-Tag: noindex

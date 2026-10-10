@@ -1,77 +1,67 @@
+// Simulador de empréstimo: Tabela Price (parcelas fixas).
 
+const form = document.getElementById('loan-form');
+const submitButton = form.querySelector('button[type="submit"]');
+const loading = document.getElementById('loading');
+const results = document.getElementById('results');
+const errorBox = document.getElementById('error');
 
-// Submit event listener
-document.querySelector('#loan-form').addEventListener('submit', function(e){
-    // Hide the results
-    document.querySelector('#results').style.display = 'none';
-    // Show the loading animation
-    document.querySelector('#loading').style.display = 'block';
+const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
-    setTimeout(calculateResults, 2000);
+let errorTimer;
 
+form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    hideError();
+    results.hidden = true;
+    loading.hidden = false;
+    submitButton.disabled = true;
+
+    setTimeout(calculateResults, 600);
 });
 
-// Calculate the results
-function calculateResults(){
-    // Declare UI variables
-    const amount = document.getElementById('amount');
-    const interest = document.getElementById('interest');
-    const years = document.getElementById('years');
-    const monthlyPayment = document.getElementById('monthly-payment');
-    const totalPayment = document.getElementById('total-payment');
-    const totalInterest = document.getElementById('total-interest');
+// Esconde o resultado anterior quando o usuário altera algum campo.
+form.addEventListener('change', function () {
+    results.hidden = true;
+});
 
-    const principle = parseFloat(amount.value);
-    const calculatedInterest = parseFloat(interest.value)/100;
-    const calculatedPayments = parseFloat(years.value);
-    
-    // Calculate monthly payments
-    const x = Math.pow(1 + calculatedInterest, calculatedPayments);
-    const monthly = (principle * x * calculatedInterest) / (x - 1);
+function calculateResults() {
+    const principal = parseFloat(document.getElementById('amount').value);
+    const rate = parseFloat(document.getElementById('interest').value) / 100;
+    const months = parseInt(document.getElementById('years').value, 10);
 
-    if(isFinite(monthly)){
-        monthlyPayment.value = monthly.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-        totalPayment.value = (monthly * calculatedPayments).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-        totalInterest.value = ((monthly * calculatedPayments) - principle).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+    const x = Math.pow(1 + rate, months);
+    const monthly = rate === 0 ? principal / months : (principal * x * rate) / (x - 1);
 
-        // Show results and hide the loader
-        document.querySelector('#results').style.display = 'block';
-        document.querySelector('#loading').style.display = 'none';
-    } else {
-        // Show an error message
-        showError('Os dados inseridos não sáo válidos');
+    loading.hidden = true;
+    submitButton.disabled = false;
+
+    if (!(principal > 0 && months > 0 && isFinite(monthly))) {
+        showError('Os dados inseridos não são válidos.');
+        return;
     }
+
+    const total = monthly * months;
+
+    document.getElementById('monthly-payment').textContent = currency.format(monthly);
+    document.getElementById('total-payment').textContent = currency.format(total);
+    document.getElementById('total-interest').textContent = currency.format(total - principal);
+
+    results.hidden = false;
+    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// Show error on invalid input
-function showError(error){
-    // Hide the results and loader
-    document.querySelector('#results').style.display = 'none';
-    document.querySelector('#loading').style.display = 'none';
+function showError(message) {
+    results.hidden = true;
+    errorBox.textContent = message;
+    errorBox.hidden = false;
 
-    // Create a div for the error message
-    const errorDiv = document.createElement('div');
-
-    // Get elements
-    const card = document.querySelector('.card');
-    const heading = document.querySelector('.heading');
-
-    // Add a class to the error message div
-    errorDiv.className = 'alert alert-danger';
-    
-    // Create a text nod and append to div
-    errorDiv.appendChild(document.createTextNode(error));
-
-    // Insert the error message above the heading
-    card.insertBefore(errorDiv, heading);
-
-    // Clear error message after 3 seconds
-    setTimeout(clearError, 4000);
+    clearTimeout(errorTimer);
+    errorTimer = setTimeout(hideError, 4000);
 }
 
-// Clear the error message
-function clearError(){
-    document.querySelector('.alert').remove();
+function hideError() {
+    errorBox.hidden = true;
+    errorBox.textContent = '';
 }
-
