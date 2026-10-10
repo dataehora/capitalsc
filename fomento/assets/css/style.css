@@ -649,6 +649,7 @@ section {
   font-size: 18px;
 }
 
+.services .title,
 .services .title a {
   color: #111;
 }
@@ -659,7 +660,7 @@ section {
   margin-bottom: 0;
 }
 
-.services .icon-box:hover .title a, .services .icon-box:hover .description {
+.services .icon-box:hover .title, .services .icon-box:hover .title a, .services .icon-box:hover .description {
   color: #fff;
 }
 

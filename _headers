@@ -12,9 +12,24 @@
 
 /*
   X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(self)
   Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google.com https://*.google.com.br https://*.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.google.com.br; frame-src https://www.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+
+# Static assets are not fingerprinted, so keep the browser cache short (1 day)
+# and let it serve a stale copy while it revalidates in the background.
+/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/esc/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/fomento/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/simulacao/images/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 https://:project.pages.dev/*
   X-Robots-Tag: noindex
